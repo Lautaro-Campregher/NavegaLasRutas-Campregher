@@ -1,10 +1,10 @@
-import "./CounterContainer";
+import { Link } from "react-router-dom";
 
-function Button({ resetCounter }) {
+function Button({ id }) {
   return (
     <>
-      <button className="btn" onClick={resetCounter}>
-        Agregar al carrito
+      <button className="btn">
+        <Link to={`./product/${id}`}>Ver más</Link>
       </button>
     </>
   );

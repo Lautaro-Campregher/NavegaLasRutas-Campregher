@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import Catalogo from "./Catalogo";
 import { getList } from "./fetch";
+import Categorias from "./Categorias";
 
-function CatalogoContainer() {
+function CategoriasContainer() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     getList().then((item) => setProducts(item));
   }, []);
 
-  return <Catalogo productos={products} />;
+  return <Categorias productos={products} />;
 }
 
-export default CatalogoContainer;
+export default CategoriasContainer;
