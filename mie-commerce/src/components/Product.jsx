@@ -1,22 +1,22 @@
 import { useContext } from "react";
 import { cartContext } from "./CartProvider";
 
-function Product(props) {
-  const valueContext = useContext(cartContext);
+function Product({ product }) {
+  const { addToCart } = useContext(cartContext);
 
   function handleAddCart() {
-    valueContext.setTotal(valueContext.total + 1);
+    addToCart(product);
   }
 
   return (
     <div className="producto">
       <section className="card_producto">
-        <h2>{props.product.title}</h2>
+        <h2>{product.title}</h2>
         <article>
-          <img src={props.product.image} alt={props.product.title} />
+          <img src={product.image} alt={product.title} />
         </article>
-        <p>{props.product.description}</p>
-        <p>${props.product.price}</p>
+        <p>{product.description}</p>
+        <p>${product.price}</p>
         <button onClick={handleAddCart}>Agregar al carrito</button>
       </section>
     </div>
