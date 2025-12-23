@@ -1,14 +1,18 @@
 import { useParams } from "react-router-dom";
-import { getProduct } from "../components/fetch";
+import { getProduct } from "../services/productsService";
 import { useEffect, useState } from "react";
 import Product from "../components/Product";
 
 function ProductContainer() {
   const { id } = useParams();
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState();
 
   useEffect(() => {
-    getProduct(id).then((item) => setProduct(item));
+    getProduct(id)
+      .then((item) => setProduct(item))
+      .catch((error) => {
+        console.error(error);
+      });
   }, [id]);
 
   return <Product product={product} />;

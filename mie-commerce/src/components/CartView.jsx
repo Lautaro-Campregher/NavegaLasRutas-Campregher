@@ -1,10 +1,13 @@
 import { useContext, useState } from "react";
 import { cartContext } from "./CartProvider";
+import { db } from "../firebase/config";
+import { addDoc, collection } from "firebase/firestore";
 
 function CartView() {
   const { cart, resetCart, deleteProduct, totalCart } = useContext(cartContext);
 
-  const [total, setTotal] = useState(0);
+  const [nombre, setNombre] = useState("");
+  const [tel, setTel] = useState("");
 
   function handleResetCart() {
     resetCart();
@@ -12,6 +15,36 @@ function CartView() {
 
   function handleDeleteProduct(id) {
     deleteProduct(id);
+  }
+
+  async function handleComprar(e) {
+    e.preventDefault();
+
+    if (!nombre || !tel || cart.length === 0) {
+      alert("Llene los campos");
+      return;
+    }
+
+    try {
+      const compraRealizada = collection(db, "Ventas");
+
+      const formCompra = await addDoc(compraRealizada, {
+        comprador: {
+          nombre,
+          tel,
+        },
+        items: cart,
+        total: totalCart,
+      });
+
+      console.log("Compra regristrada con ID:", formCompra.id);
+
+      resetCart();
+      setNombre("");
+      setTel("");
+    } catch (error) {
+      console.error("Error en compra", error);
+    }
   }
 
   return (
@@ -41,6 +74,28 @@ function CartView() {
           ))
         )}
       </div>
+      <form onSubmit={handleComprar}>
+        <div>
+          <label>Nombre</label>
+          <input
+            type="text"
+            value={nombre}
+            placeholder="Ej: Lucas"
+            inputMode="text"
+            onChange={(e) => setNombre(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="tel">Telefono de contacto</label>
+          <input
+            type="text"
+            value={tel}
+            placeholder="Ej:555-212135"
+            onChange={(e) => setTel(e.target.value)}
+          />
+        </div>
+        <button type="submit">Comprar</button>
+      </form>
     </div>
   );
 }

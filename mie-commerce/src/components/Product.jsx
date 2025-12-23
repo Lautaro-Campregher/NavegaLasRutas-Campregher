@@ -3,6 +3,10 @@ import { cartContext } from "./CartProvider";
 import CounterContainer from "../containers/CounterContainer";
 
 function Product({ product }) {
+  if (!product) {
+    return <p>Cargando producto...</p>;
+  }
+
   const { addToCart } = useContext(cartContext);
 
   function handleAddCart(quantity) {

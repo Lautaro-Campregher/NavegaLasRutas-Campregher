@@ -3,7 +3,7 @@ import { useState } from "react";
 import Counter from "../components/Counter";
 
 function CounterContainer({ onAdd }) {
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(1);
 
   function handleChange(e) {
     const value = Number(e.target.value);

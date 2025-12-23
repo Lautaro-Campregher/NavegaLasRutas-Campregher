@@ -20,7 +20,7 @@ function Categorias({ productos }) {
         {productosFiltrados.map((item) => (
           <div key={item.id} className="card">
             <h3>{item.title}</h3>
-            <img src={item.image} alt={item.title} />
+            <img src={item.img} alt={item.title} />
             <h4>{item.category}</h4>
             <Button id={item.id} />
           </div>
