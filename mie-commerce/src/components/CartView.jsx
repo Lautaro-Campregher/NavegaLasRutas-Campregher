@@ -2,12 +2,15 @@ import { useContext, useState } from "react";
 import { cartContext } from "./CartProvider";
 import { db } from "../firebase/config";
 import { addDoc, collection } from "firebase/firestore";
+import PopUp from "./PopUp";
 
 function CartView() {
   const { cart, resetCart, deleteProduct, totalCart } = useContext(cartContext);
 
   const [nombre, setNombre] = useState("");
   const [tel, setTel] = useState("");
+  const [showPopUp, setShowPopUp] = useState(false);
+  const [compraData, setCompraData] = useState(null);
 
   function handleResetCart() {
     resetCart();
@@ -28,7 +31,7 @@ function CartView() {
     try {
       const compraRealizada = collection(db, "Ventas");
 
-      const formCompra = await addDoc(compraRealizada, {
+      await addDoc(compraRealizada, {
         comprador: {
           nombre,
           tel,
@@ -37,8 +40,8 @@ function CartView() {
         total: totalCart,
       });
 
-      console.log("Compra regristrada con ID:", formCompra.id);
-
+      setCompraData({ nombre, tel, total: totalCart });
+      setShowPopUp(true);
       resetCart();
       setNombre("");
       setTel("");
@@ -49,6 +52,14 @@ function CartView() {
 
   return (
     <div className="container">
+      {showPopUp && compraData && (
+        <PopUp
+          nombre={compraData.nombre}
+          tel={compraData.tel}
+          total={compraData.total}
+          onClose={() => setShowPopUp(false)}
+        />
+      )}
       <h1>Carrito</h1>
       <div>
         <button onClick={handleResetCart}>Vaciar carrito</button>
