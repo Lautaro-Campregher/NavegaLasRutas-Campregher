@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Counter from "../components/Counter";
+import Counter from "../components/Carrito/Counter";
 
 function CounterContainer({ onAdd }) {
   const [counter, setCounter] = useState(1);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Productos from "../components/Productos";
+import Productos from "../components/Catalogo/Productos";
 import { getList } from "../services/productsService";
 
 function ProductosContainer() {

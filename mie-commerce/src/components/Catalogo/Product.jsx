@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import { CartContext } from "../context/CartProvider";
-import CounterContainer from "../containers/CounterContainer";
+import { CartContext } from "../../context/CartProvider";
+import CounterContainer from "../../containers/CounterContainer";
 
 function Product({ product }) {
+  const { addToCart } = useContext(CartContext);
+
   if (!product) {
     return <p>Cargando producto...</p>;
   }
-
-  const { addToCart } = useContext(CartContext);
 
   function handleAddCart(quantity) {
     addToCart(product, quantity);
